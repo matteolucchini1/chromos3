@@ -20,8 +20,8 @@ def calculate_hi(low_e=3.0,
     '''
 
     purpose = 'Calculating hardness & intensity values'
-    print len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'='
-    print 'Soft:', soft, 'Hard:', hard, '\n' + len(purpose)*'-'
+    print(len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'=')
+    print('Soft:', soft, 'Hard:', hard, '\n' + len(purpose)*'-')
 
     import os
     import pandas as pd
@@ -61,11 +61,11 @@ def calculate_hi(low_e=3.0,
         rsp = group.rsp.values[0]
         fltr = group.filters.values[0]
 
-        print obsid
+        print(obsid)
 
         # Check whether response file is there
         if not os.path.isfile(rsp):
-            print 'ERROR: No response file'
+            print('ERROR: No response file')
             continue
 
         # XSPEC Commands to unfold spectrum around flat powerlaw
@@ -162,10 +162,10 @@ def calculate_hi(low_e=3.0,
             'hardness_i3t16_s6p4t9p7_h9p7t16',
             'hardness_err_i3t16_s6p4t9p7_h9p7t16']
     db = database.merge(db,df,cols)
-    print 'Number of unique elements in database'
-    print '======================='
-    print db.apply(pd.Series.nunique)
-    print '======================='
-    print 'Pipeline completed'
+    print('Number of unique elements in database')
+    print('=======================')
+    print(db.apply(pd.Series.nunique))
+    print('=======================')
+    print('Pipeline completed')
     database.save(db)
     logs.stop_logging()

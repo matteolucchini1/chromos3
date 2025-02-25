@@ -5,15 +5,15 @@ def execute(command):
 
     import subprocess
 
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding="utf-8")
 
     # Poll process for new output until finished
     while True:
-        nextline = process.stdout.readline()
+        nextline = process.stdout.readline()       
         if nextline == '' and process.poll() != None:
             break
         if len(nextline) != 0:
-            print nextline.strip()
+            print(nextline.rstrip())    
 
     output = process.communicate()
     normal_output = output[0]
@@ -23,4 +23,4 @@ def execute(command):
     if (exitCode == 0):
         return normal_output
     else:
-        print 'ERROR:', ' '.join(command), error
+        print('ERROR:', ' '.join(command), error)

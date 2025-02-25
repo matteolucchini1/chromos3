@@ -88,7 +88,7 @@ def extract_lc_and_sp():
     '''
 
     purpose = 'Extracting light curves & spectra'
-    print len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'='
+    print(len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'=')
 
     import os
     import pandas as pd
@@ -135,15 +135,15 @@ def extract_lc_and_sp():
         channels = df.energy_channels.values[0]
         if type(channels)==float:
             if isnan(channels):
-                print obsid, mode, res, 'ERROR: No energy channels'
+                print(obsid, mode, res, 'ERROR: No energy channels')
                 continue
         if type(times_pcu)==float:
             if isnan(times_pcu):
-                print obsid, mode, res, 'ERROR: No pcu times, as no filter file'
+                print(obsid, mode, res, 'ERROR: No pcu times, as no filter file')
                 continue
         if type(gti)==float:
             if isnan(gti):
-                print obsid, mode, res, 'ERROR: No gti times'
+                print(obsid, mode, res, 'ERROR: No gti times')
                 continue
 
         # You get problems if the file name is longer than 80 characters (incl@)
@@ -169,7 +169,7 @@ def extract_lc_and_sp():
             output += '_per_layer'
             output_bkg += '_per_layer'
 
-        print obsid, mode, res, '--> Extracting Lightcurve'
+        print(obsid, mode, res, '--> Extracting Lightcurve')
 
         # Extract files
         if mode == 'event' or mode == 'gx':
@@ -184,13 +184,13 @@ def extract_lc_and_sp():
         lc = output + '.lc'
         lc_bkg = output_bkg + '.lc'
         if not (os.path.isfile(lc) or os.path.isfile(lc_bkg)):
-            print 'ERROR: Lightcurve not created'
+            print('ERROR: Lightcurve not created')
             continue
         if layer:
             sp = output + '.pha'
             sp_bkg = output_bkg + '.pha'
             if not (os.path.isfile(sp) or os.path.isfile(sp_bkg)):
-                print 'ERROR: Spectrum not created'
+                print('ERROR: Spectrum not created')
                 continue
         else:
             sp = float('NaN')

@@ -1,14 +1,14 @@
 import os
 
-selection = 'xte_J1550m564'
+selection = 'test_2'
 subscripts = os.path.dirname(os.path.realpath(__file__)) + '/'
 
-data = '/scratch/david/master_project/xte_J1550m564/'
+data = '/home/matteo/Data/HFQPOs/J1550_2/'
 data_info = data + 'info/'
-database = data_info + 'database_xte_J1550m564.csv'
+database = data_info + 'database_test.csv'
 
 logs = data_info + 'log_scripts/'
 terminal_output = True
 
-obsid_lists = '/scratch/david/master_project/obsid_lists/'
+obsid_lists = '/home/matteo/Data/HFQPOs/Obsids/'
 obsid_list = obsid_lists + selection + '.lst'

@@ -10,7 +10,7 @@ def spacecraft_filters():
     '''
 
     purpose = 'Create time filters'
-    print len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'='
+    print(len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'=')
 
     from astropy.io import fits
     import os
@@ -34,10 +34,12 @@ def spacecraft_filters():
     d = defaultdict(list)
     for obsid, group in db.groupby(['obsids']):
 
-        print obsid
+        obsid = str(obsid[0])
+        print(obsid)
 
         # Check whether an observation has high count rates
         lc = group.paths_obsid.values[0] + 'stdprod/xp' + obsid.replace('-','') + '_n1.lc.gz'
+        print(lc)
         try:
             hdulist = fits.open(lc)
             data = hdulist[1].data
@@ -64,13 +66,12 @@ def spacecraft_filters():
 
         if mean <= 500:
             sel += '.and.electron2.lt.0.1'
-
         command = ['maketime',
                    f, # Name of FITS file
                    gti, # Name of output FITS file
                    sel, # Selection expression
                    'compact=no', # Flag yes, if HK format is compact
-                   'time="TIME"'] # Column containing HK parameter times
+                   'time=TIME'] # Column containing HK parameter times
 
         if os.path.exists(f):
             shell.execute(command)

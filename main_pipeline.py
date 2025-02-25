@@ -17,6 +17,10 @@ from subscripts.create_power_colours import *
 from subscripts.create_responses import *
 from subscripts.calculate_hi import *
 
+import os
+import sys 
+sys.path.append(os.getcwd()+'/subscripts/')
+
 # Run the following first:
 # --------------------------------------
 # virtualenv venv --system-site-packages

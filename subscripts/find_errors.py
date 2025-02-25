@@ -11,7 +11,7 @@ def find_errors():
     '''
 
     purpose = 'Finding errors'
-    print len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'='
+    print(len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'=')
 
     import os
     import pandas as pd
@@ -31,6 +31,6 @@ def find_errors():
         with open(f, 'r') as log:
             for line in log:
                 if 'ERROR' in line:
-                    print line
+                    print(line)
                     # TODO print lines above and below to see cause of error
                     # TODO print file name, so you know what is going 

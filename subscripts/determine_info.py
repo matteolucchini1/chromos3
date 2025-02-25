@@ -8,7 +8,7 @@ def determine_info():
     creates a file with information on each observation
     '''
     purpose = 'Finding information on data files'
-    print len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'='
+    print(len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'=')
 
     import os
     import pandas as pd
@@ -148,7 +148,7 @@ def determine_info():
 
     # List all data files per obsid, per mode, per res
     for obsid in db.obsids.unique():
-        print obsid
+        print(obsid)
         condo = (db.obsids == obsid)
         for mode in db[condo].modes.unique():
             condm = condo & (db.modes==mode)
@@ -186,7 +186,7 @@ def determine_info():
     db = database.merge(db, new_data, ['paths_po_pm_pr'])
     unfound_obsids = db[db.modes.isnull()].obsids.values
     if len(unfound_obsids) > 0:
-        print 'ERROR: NO DATA FOR THESE OBSIDS', unfound_obsids
+        print('ERROR: NO DATA FOR THESE OBSIDS', unfound_obsids)
         db = db[db.modes.notnull()]
 
     database.save(db)

@@ -6,7 +6,7 @@
 from datetime import datetime
 from astropy.io import fits
 
-MIN_E = 2.
+MIN_E = 3.
 MAX_E = 13.
 
 def energy_to_channel(epoch, table, energy, bit):
@@ -126,7 +126,7 @@ def get_channel_range(mode, cer, path_event, bit):
                 rel_channels = tddes2.split('& C')[1][1:].split(']')[0].replace('~','-')
                 rel_channels = ','.join([str(e) for e in range(int(rel_channels.split('-')[0]), int(rel_channels.split('-')[1])+1)])
             except:
-                print 'ERROR: No channel information in this file'
+                print('ERROR: No channel information in this file')
                 return float('NaN')
         else:
             # Cut out the channels
@@ -206,7 +206,7 @@ def find_channels():
     '''
 
     purpose = 'Finding the correct channels for later extraction'
-    print len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'='
+    print(len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'=')
 
     import os
     import pandas as pd
@@ -226,9 +226,11 @@ def find_channels():
 
     d = defaultdict(list)
     for obsid, group in db.groupby(['obsids']):
+    
+        obsid = str(obsid[0])
         group = group.drop_duplicates('paths_data')
 
-        print obsid
+        print(obsid)
         for mode, path, time, bit in zip(group.modes,group.paths_data,group.times,group.bitsize):
 
             if mode == 'std1':
@@ -245,7 +247,7 @@ def find_channels():
                 bin_channels = get_channel_range(mode, abs_channels, path,bit)
                 final_channels = bin_channels
 
-            print '   ', mode, '-->', final_channels
+            print('   ', mode, '-->', final_channels)
 
             d['paths_data'].append(path)
             d['energy_channels'].append(final_channels)

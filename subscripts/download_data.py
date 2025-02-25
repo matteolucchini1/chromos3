@@ -11,7 +11,7 @@ def download():
     '''
 
     purpose = 'Downloading data'
-    print len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'='
+    print(len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'=')
 
     import os
     import paths
@@ -36,10 +36,10 @@ def download():
 
     # Execute an adapted version of Abbie's code
     command = ['bash',
-                paths.subscripts + 'download_data.sh',
-                paths.obsid_list,
-                paths.data,
-                paths.data_info[:-1]]
+               paths.subscripts + 'download_data.sh',
+               paths.obsid_list,
+               paths.data,
+               paths.data_info[:-1]]
 
     shell.execute(command)
 

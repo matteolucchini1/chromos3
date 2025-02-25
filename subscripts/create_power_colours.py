@@ -22,7 +22,7 @@ def power_colour(path):
         all_data = np.loadtxt(path,dtype=float)
         inverted_data = np.transpose(all_data)
     except IOError:
-        print 'ERROR: Power spectrum not present'
+        print('ERROR: Power spectrum not present')
         return
 
     # Give the columns their names
@@ -92,7 +92,7 @@ def create_power_colours():
 
     # Let the user know what's going to happen
     purpose = 'Creating Power Colours'
-    print len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'='
+    print(len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'=')
 
     import os
     import pandas as pd
@@ -121,7 +121,7 @@ def create_power_colours():
         mode = group.modes.values[0]
         res = group.resolutions.values[0]
 
-        print obsid, mode, res
+        print(obsid, mode, res)
 
         # Calculate power colour
         output = power_colour(ps)
@@ -139,6 +139,6 @@ def create_power_colours():
     # Update database and save
     df = pd.DataFrame(d)
     db = database.merge(db,df,['pc1','pc1_err','pc2','pc2_err','lt3sigma'])
-    print 'DBNUNIQUE\n', db.apply(pd.Series.nunique)
+    print('DBNUNIQUE\n', db.apply(pd.Series.nunique))
     database.save(db)
     logs.stop_logging()

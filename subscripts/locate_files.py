@@ -8,7 +8,7 @@ def locate_files():
     grouped per P<number> folder, so still needs to be split out afterwards.
     '''
     purpose = 'Locating data files'
-    print len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'='
+    print(len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'=')
 
     import os
     import glob
@@ -23,7 +23,7 @@ def locate_files():
     os.chdir(paths.data)
 
     for e in glob.glob('./P*'):
-
+        print(e)
         os.chdir(e)
 
         # Ensure only obsids in the list are used

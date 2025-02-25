@@ -11,7 +11,7 @@ def pcu_filters():
     '''
 
     purpose = 'Determine if number of PCUs has changed'
-    print len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'='
+    print(len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'=')
 
     import os
     import pandas as pd
@@ -32,13 +32,15 @@ def pcu_filters():
 
     d = defaultdict(list)
     for obsid, group in db.groupby(['obsids']):
+    
+        obsid = str(obsid[0])
         filt = group.filters.values[0]
 
         # Import data
         try:
             hdulist = fits.open(filt)
         except IOError:
-            print 'ERROR: File not found for obsid ', obsid
+            print('ERROR: File not found for obsid ', obsid)
             continue
         tstart = hdulist[0].header['TSTART']
         timezero = hdulist[0].header['TIMEZERO']
@@ -82,7 +84,7 @@ def pcu_filters():
         if t_range[-1] == '-':
             t_range += repr(time[-1])
 
-        print obsid, '-->', t_range
+        print(obsid, '-->', t_range)
 
         filename = group.paths_obsid.values[0] + 'times_pcu.dat'
         with open(filename, 'w') as f:

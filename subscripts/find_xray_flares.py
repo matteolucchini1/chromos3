@@ -14,7 +14,7 @@ def cut_flare(path_obsid, lc, bkg_lc, res, mode):
     try:
         rate, t, dt, n_bins, error = np.loadtxt(lc, dtype=float, unpack=True)
     except IOError:
-        print 'ERROR: No lightcurve file'
+        print('ERROR: No lightcurve file')
         return
 
     # Calculate the mean rate
@@ -29,7 +29,7 @@ def cut_flare(path_obsid, lc, bkg_lc, res, mode):
     try:
         n_bins = int(n_bins[0])
     except IndexError:
-        print 'ERROR: Lightcurve file empty'
+        print('ERROR: Lightcurve file empty')
         return
 
     j = 0
@@ -62,7 +62,7 @@ def cut_flare(path_obsid, lc, bkg_lc, res, mode):
         try:
             bkg_rate = np.loadtxt(bkg_lc, dtype=float)
         except IOError:
-            print 'ERROR: Failed to locate background file'
+            print('ERROR: Failed to locate background file')
             return
 
         # Remove the X-ray events
@@ -109,7 +109,7 @@ def cut_xray_flares():
 
     # Let the user know what's going to happen
     purpose = 'Determining X-ray flares'
-    print len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'='
+    print(len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'=')
 
     import os
     import pandas as pd
@@ -137,13 +137,13 @@ def cut_xray_flares():
         res = group.resolutions.values[0]
         mode = group.modes.values[0]
         path_obsid = group.paths_obsid.values[0]
-        print obsid, mode, res
+        print(obsid, mode, res)
 
         # Calculate whether flare present
         result = cut_flare(path_obsid, path_lc, path_bkg, res, mode)
 
         if result:
-            print 'Flare between:', result[2]
+            print('Flare between:', result[2])
             d['bkg_corrected_lc'].append(path_lc)
             d['lc_no_flare'].append(result[0])
             d['bkg_no_flare'].append(result[1])

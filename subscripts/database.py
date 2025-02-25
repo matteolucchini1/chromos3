@@ -6,7 +6,7 @@ import paths
 def create_db():
 
     if os.path.exists(paths.database):
-        print 'WARNING: OVERWRITING DATABASE'
+        print('WARNING: OVERWRITING DATABASE')
 
     with open(paths.obsid_list,'r') as f:
         obsids = [l.strip() for l in f.readlines()]

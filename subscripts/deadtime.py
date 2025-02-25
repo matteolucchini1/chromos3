@@ -11,7 +11,7 @@ def calculate_deadtime(std1path, f, npcu=5, vle_correction='mean'):
     '''
 
     import pandas as pd
-    import pyfits
+    import astropy.io.fits as pyfits
     from numpy import sin, cos, pi, mean
         
     hdulist = pyfits.open(std1path)

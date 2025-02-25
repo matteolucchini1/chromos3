@@ -13,19 +13,19 @@ def power_spectrum(path_lc, path_bkg, path_std1, npcu):
         rate, t, dt, n_bins, error = np.loadtxt(path_lc,dtype=float,unpack=True)
         bkg_rate = np.loadtxt(path_bkg, dtype=float, unpack=True)
     except IOError:
-        print 'ERROR: Lightcurve does not exist'
+        print('ERROR: Lightcurve does not exist')
         return
 
     # Check whether there are any counts
     if sum(rate) < 10:
-        print 'ERROR: Lightcurve has zero count rate'
+        print('ERROR: Lightcurve has zero count rate')
         return
 
     # Determine the number of bins
     try:
         n_bins = int(n_bins[0])
     except IndexError:
-        print 'ERROR: No data in lightcurve file'
+        print('ERROR: No data in lightcurve file')
         return
 
     # Determine the (time) width of each bin
@@ -47,7 +47,7 @@ def power_spectrum(path_lc, path_bkg, path_std1, npcu):
     length = 0
 
     # Calculate where the data should be cut
-    for j in xrange(1, n_bins):
+    for j in range(1, n_bins):
 
         # Check for gaps; in case of a gap, set length to zero.
         if (t[j] - t[j-1]) < 1.5*dt:
@@ -70,7 +70,7 @@ def power_spectrum(path_lc, path_bkg, path_std1, npcu):
 
     # Stop calculations if no segments can be found
     if number_of_segments == 0:
-        print 'WARNING: No segments found'
+        print('WARNING: No segments found')
         return
 
     # Initialise the power spectrum array
@@ -83,14 +83,14 @@ def power_spectrum(path_lc, path_bkg, path_std1, npcu):
     frequency = fft.fftfreq(n_seg, dt)
 
     # Calculate the error on the frequencies
-    frequency_error = (1.0/(2*dt*float(n_seg)))*np.ones(n_seg/2 - 1)
+    frequency_error = (1.0/(2*dt*float(n_seg)))*np.ones(int(n_seg/2 - 1))
 
     # Initialise rate arrays
     rate_tot = []
     bkg_tot = []
 
     # For each segment
-    for j in xrange(number_of_segments):
+    for j in range(number_of_segments):
         # Make an array containing the segment of the light curve
         segment = rate[segment_endpoints[j]-n_seg : segment_endpoints[j]]
         bkg_segment = bkg_rate[segment_endpoints[j]-n_seg : segment_endpoints[j]]
@@ -135,10 +135,10 @@ def power_spectrum(path_lc, path_bkg, path_std1, npcu):
     # Note the range of the power spectrum - this is due to the output
     # of the FFT function, which adds the negative powers at the end of
     # the list
-    ps = power_spectrum[1:n_seg/2]
-    ps_error = power_spectrum_error[1:n_seg/2]
-    ps_squared = power_spectrum_squared[1:n_seg/2]
-    frequency = frequency[1:n_seg/2]
+    ps = power_spectrum[1:int(n_seg/2)]
+    ps_error = power_spectrum_error[1:int(n_seg/2)]
+    ps_squared = power_spectrum_squared[1:int(n_seg/2)]
+    frequency = frequency[1:int(n_seg/2)]
 
     return ps, ps_error, ps_squared, number_of_segments, frequency, frequency_error
 
@@ -150,7 +150,7 @@ def create_power_spectra():
 
     # Let the user know what's going to happen
     purpose = 'Creating Power Spectra'
-    print len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'='
+    print (len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'=')
 
     import os
     import pandas as pd
@@ -192,7 +192,7 @@ def create_power_spectra():
         if mode == 'gx2':
             mode = 'gx'
 
-        print obsid, mode, res
+        print(obsid, mode, res)
 
         # Find std1 path
         try:

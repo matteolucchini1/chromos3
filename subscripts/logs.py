@@ -46,6 +46,6 @@ def output(filename):
 
 def stop_logging():
     end_time = current_time()
-    print 'Finished: %s, Runtime: %s' % (str(end_time), (str(end_time - t)))
+    print('Finished: %s, Runtime: %s' % (str(end_time), (str(end_time - t))))
     sys.stdout = sys.__stdout__
     sys.stderr = sys.__stderr__

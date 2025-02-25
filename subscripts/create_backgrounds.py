@@ -58,7 +58,7 @@ def create_backgrounds():
     '''
 
     purpose = 'Creating background files'
-    print len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'='
+    print(len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'=')
 
     import os
     import pandas as pd
@@ -78,10 +78,12 @@ def create_backgrounds():
 
     d = defaultdict(list)
     for obsid, group in db.groupby(['obsids']):
+    
+        obsid = str(obsid[0])
         path_obsid = group.paths_obsid.values[0]
 
         for mode, modegroup in group.groupby('modes'):
-            print obsid, mode
+            print(obsid, mode)
             # Don't overdo pcabackest - will be same for gx1 or gx2
             if mode == 'gx1':
                 mode = 'gx'
@@ -92,7 +94,7 @@ def create_backgrounds():
             # To ensure you're not running more times than necessary
             ngroup = group[group.modes=='std2'].drop_duplicates('paths_data')
             if ngroup.shape[0]==0:
-                print 'ERROR: No standard-2 files for this obsid'
+                print('ERROR: No standard-2 files for this obsid')
                 continue
 
             # Keep track of files you'll create

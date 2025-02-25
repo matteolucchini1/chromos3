@@ -42,8 +42,8 @@ def rebin(path_obsid, path_lc, path_bkg, mode, resolution):
         rate, t, dt, n_bins, error = read_light_curve(path_lc)
         bkg_rate, bkg_t, bkg_dt, bkg_n_bins, bkg_error = read_light_curve(path_bkg)
     except IOError:
-        print 'ERROR: No lightcurve!'
-        return float('NaN'), float('Nan')
+        print('ERROR: No lightcurve!')
+        return(float('NaN'), float('Nan'))
 
     # Output
     path_rebinned_bkg = path_obsid + 'rebinned_bkg_lc_' + mode
@@ -124,7 +124,7 @@ def correct_for_background():
     '''
 
     purpose = 'Accounting for backgrounds'
-    print len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'='
+    print(len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'=')
 
     import os
     import pandas as pd
@@ -163,7 +163,7 @@ def correct_for_background():
 
         if (mode == 'gx1' or mode == 'gx2'):
             mode = 'gx'
-        print obsid, mode, res
+        print(obsid, mode, res)
 
         # Rebin, and create a corrected version
         paths = rebin(path_obsid, path_lc, path_bkg, mode, res)

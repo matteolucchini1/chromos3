@@ -8,7 +8,7 @@ def create_response():
     '''
 
     purpose = 'Creating responses'
-    print len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'='
+    print(len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'=')
 
     import os
     import pandas as pd
@@ -48,7 +48,7 @@ def create_response():
         # spectrum file
         out = path_obsid + 'sp.rsp'
 
-        print obsid
+        print(obsid)
 
         # Set up the command for pcarsp
         pcarsp = ['pcarsp',

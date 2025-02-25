@@ -25,7 +25,7 @@ list_dir=$3
 data_dir=$2  ## Saves as {data_dir_prefix}/propID/obsID
 dl_log="$list_dir/download.log"
 dl_list="$list_dir/new_downloads.txt"
-web_prefix="ftps://legacy.gsfc.nasa.gov/xte/data/archive"  ## The web archive prefix
+web_prefix="https://heasarc.gsfc.nasa.gov/FTP/xte/data/archive"  ## The web archive prefix
 
 ################################################################################
 ################################################################################
@@ -109,7 +109,7 @@ fi
 echo "List of files to be downloaded: $dl_list"
 echo "Download log: $dl_log"
 
-wget -r -P $data_dir -a $dl_log -nv -nH --cut-dirs=4 -i "$dl_list"
+wget -q -r -P $data_dir -a $dl_log -nv -nH --no-check-certificate -l0 -c -N -np -R 'index*' -erobots=off --retr-symlinks --cut-dirs=5 -i "$dl_list"
 
 ##    -r: recursive, i.e. get that and all sub-directories
 ##    -P: let the directory specified be the parent directory for saving

@@ -9,7 +9,7 @@ def goodxenon_to_fits():
     '''
 
     purpose = 'Converting GoodXenon files to fits files'
-    print len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'='
+    print(len(purpose)*'=' + '\n' + purpose + '\n' + len(purpose)*'=')
 
     import os
     import pandas as pd
@@ -30,7 +30,7 @@ def goodxenon_to_fits():
     # Running it over gx1 or gx2 will give same result, but only needs to be
     # run once
     if 'gx1' not in db.modes.unique():
-       print 'No GoodXenon files found'
+       print('No GoodXenon files found')
        return
 
     # Run maketime for each obsid
