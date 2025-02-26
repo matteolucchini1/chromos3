@@ -25,6 +25,9 @@ class Logger(object):
             self.terminal = sys.stderr
             self.log = open(self.filename, 'a')
             self.log.write('\n')
+            
+    def flush(self):
+        pass
 
     def write(self, message):
         if paths.terminal_output:

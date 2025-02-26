@@ -7,7 +7,7 @@ from datetime import datetime
 from astropy.io import fits
 
 MIN_E = 3.
-MAX_E = 13.
+MAX_E = 13.5
 
 def energy_to_channel(epoch, table, energy, bit):
     '''
@@ -33,7 +33,6 @@ def energy_to_channel(epoch, table, energy, bit):
 
     # Make a list of energies
     energies = [float(i.split()[column]) for i in table]
-
     # Compare the energy value to the energies list
     for i, e in enumerate(energies):
         if e > energy:
@@ -41,13 +40,12 @@ def energy_to_channel(epoch, table, energy, bit):
             # Check which element is closer to the energy
             above = energies[i]-energy
             below = energies[i-1]-energy
-
             # Return the associated channel number of that energy
             if abs(above) < abs(below):
                 channel = table[i].split()[0]
             else:
                 channel = table[i-1].split()[0]
-
+            
             # Ensure the lowest energy channel is not returned
             # See Gleissner T., Wilms J., Pottschimdt K. etc. 2004
             if bit != 'H' and channel == '0-4':
@@ -55,7 +53,7 @@ def energy_to_channel(epoch, table, energy, bit):
 
             if channel.startswith(','):
                 channel = channel[1:]
-
+            
             # Return the channel
             return channel
 
@@ -101,7 +99,22 @@ def calculated_energy_range(date,min_energy,max_energy,bit):
 
         lower_range = energy_to_channel(epoch, text[12:], min_energy, bit)
         upper_range = energy_to_channel(epoch, text[12:], max_energy, bit)
-
+  
+        #awful hack to fix the part of the channel grid with overlapping channels
+        if len(lower_range)==4:
+            lower_range = lower_range[0:2]
+        if len(lower_range)>=5:
+            lower_range = lower_range[0:3]
+        
+        if len(upper_range)==4:
+            upper_range = str(upper_range[0])+str(upper_range[-1])
+        if len(upper_range)==5:
+            upper_range = str(upper_range[0:2])+str(upper_range[-1])
+        if len(upper_range)==6:
+            upper_range = str(upper_range[0])+str(upper_range[-2])+str(upper_range[-1])
+        if len(upper_range)==7:
+            upper_range = 201
+ 
     return str(lower_range) + '-' + str(upper_range)
 
 
@@ -136,7 +149,7 @@ def get_channel_range(mode, cer, path_event, bit):
         rel_channels = tddes2.split('& C')[1][1:].split(']')[0].replace('~','-')
         if ',' not in rel_channels:
             return float('NaN')
-
+    
     # Get a list of numbers to actually search through
     chs = []
     for cr in rel_channels.split(','):
@@ -160,7 +173,7 @@ def get_channel_range(mode, cer, path_event, bit):
             cr = [int(cr)]
 
         chs.append(cr)
-
+    
     low_ch = int(abs_channels[0])
     high_ch = int(abs_channels[-1])
 
@@ -168,9 +181,9 @@ def get_channel_range(mode, cer, path_event, bit):
     low_ind = [(i, c.index(low_ch)) for i, c in enumerate(chs) if low_ch in c]
     # If wanting mutually exclusive energies (so energy bands don't overlap)
     # then use the following line (only works for event and binned mode files)
-    # low_ind = [(i+1, c.index(low_ch)+1) for i, c in enumerate(chs) if low_ch in c]
+    #low_ind = [(i+1, c.index(low_ch)+1) for i, c in enumerate(chs) if low_ch in c]
     high_ind = [(i, c.index(high_ch)) for i, c in enumerate(chs) if high_ch in c]
-
+    
     # If not, return Nan
     if not low_ind or not high_ind:
         return float('NaN')
